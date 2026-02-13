@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>Starlink bundles · M-PESA express</title>
+  <!-- Google Fonts for clean typography -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free) for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #0b0f15;
+      font-family: 'Inter', sans-serif;
+      color: #ffffff;
+      line-height: 1.5;
+      padding: 24px 16px 40px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .brand-header {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .brand-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #f0f9ff, #b3ffe0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-name i {
+      background: none;
+      -webkit-text-fill-color: #63f5c2;
+      font-size: 36px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      font-weight: 500;
+      color: #afc9de;
+      background: rgba(30, 40, 55, 0.6);
+      padding: 8px 20px;
+      border-radius: 60px;
+      display: inline-block;
+      margin-top: 6px;
+      backdrop-filter: blur(4px);
+      border: 1px solid #3a5a6f30;
+    }
+
+    /* packages grid */
+    .packages-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 32px 0 28px;
+    }
+
+    .package-card {
+      background: linear-gradient(145deg, #1e2a34, #14212b);
+      border-radius: 32px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid #3d667a30;
+      box-shadow: 0 15px 30px -10px #00000080;
+      transition: transform 0.1s ease;
+    }
+
+    .package-card:active {
+      transform: scale(0.99);
+    }
+
+    .package-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .duration {
+      font-size: 16px;
+      font-weight: 600;
+      color: #b3eefc;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .duration i {
+      color: #4effc0;
+      width: 24px;
+      font-size: 18px;
+    }
+
+    .data-amount {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffffff, #e5ffe8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-left: 32px;
+    }
+
+    .package-purchase {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .price {
+      font-size: 26px;
+      font-weight: 800;
+      color: #d6ffb7;
+      background: #1d3d3a;
+      padding: 6px 16px;
+      border-radius: 60px;
+      border: 1px solid #60ffb0;
+      box-shadow: 0 0 15px #1affa030;
+      letter-spacing: 0.5px;
+    }
+
+    .price small {
+      font-size: 16px;
+      font-weight: 500;
+      color: #adffd7;
+    }
+
+    .buy-btn {
+      background: transparent;
+      border: 1.5px solid #7fffd4;
+      color: #d0ffec;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 10px 22px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(20, 60, 55, 0.5);
+      backdrop-filter: blur(5px);
+      cursor: pointer;
+      transition: all 0.15s;
+      width: fit-content;
+    }
+
+    .buy-btn i {
+      color: #50ffb0;
+      font-size: 14px;
+    }
+
+    .buy-btn:active {
+      background: #2e6b5e;
+      color: white;
+      border-color: #b2ffe0;
+    }
+
+    .popular-tag {
+      background: #00cc99;
+      color: black;
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-left: 10px;
+      letter-spacing: 0.5px;
+    }
+
+    /* NEW: M-PESA display area – working number + STK Push simulation */
+    .mpesa-panel {
+      background: #0e1a24;
+      border-radius: 40px;
+      padding: 24px 20px;
+      margin: 20px 0 25px;
+      border: 2px solid #1e5f5f;
+      box-shadow: 0 8px 0 #0a2a2a;
+    }
+
+    .mpesa-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #baffd0;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 16px;
+      background: #11212e;
+      padding: 8px 20px;
+      border-radius: 60px;
+      width: fit-content;
+    }
+
+    .mpesa-title i {
+      color: #44ffb0;
+      font-size: 28px;
+    }
+
+    .phone-input-area {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #9bc9d0;
+      font-weight: 500;
+    }
+
+    .phone-box {
+      display: flex;
+      align-items: center;
+      background: #0b1b25;
+      border-radius: 60px;
+      border: 2px solid #3f9f9f;
+      padding: 4px 4px 4px 20px;
+    }
+
+    .phone-box span {
+      color: #aaffdd;
+      font-weight: 700;
+      font-size: 18px;
+      background: #1f3e48;
+      padding: 8px 14px;
+      border-radius: 40px;
+    }
+
+    .phone-box input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 16px 12px;
+      font-size: 20px;
+      font-weight: 600;
+      color: white;
+      outline: none;
+      letter-spacing: 1px;
+    }
+
+    .phone-box input::placeholder {
+      color: #3a727a;
+      font-weight: 400;
+    }
+
+    .mpesa-number-display {
+      background: #092b2b;
+      border-radius: 50px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 22px;
+      font-weight: 700;
+      border: 1px solid #4affb0;
+      margin: 5px 0;
+    }
+
+    .mpesa-number-display i {
+      color: #34ffb0;
+      font-size: 28px;
+    }
+
+    .copy-btn {
+      background: #1d4e4e;
+      border: none;
+      color: white;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      border: 1px solid #43ffb0;
+    }
+
+    .stk-push-btn {
+      background: linear-gradient(145deg, #11998e, #0a5c4e);
+      border: none;
+      color: white;
+      font-weight: 800;
+      font-size: 20px;
+      padding: 22px 24px;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      width: 100%;
+      cursor: pointer;
+      border: 2px solid #5affc0;
+      box-shadow: 0 10px 0 #063d36;
+      transition: 0.05s linear;
+      margin-top: 12px;
+    }
+
+    .stk-push-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 5px 0 #063d36;
+    }
+
+    .selected-package-badge {
+      background: #143b3b;
+      padding: 10px 18px;
+      border-radius: 60px;
+      color: #e2ffd6;
+      font-weight: 600;
+    }
+
+    .footer-note {
+      text-align: center;
+      color: #7f9faa;
+      font-size: 14px;
+      margin-top: 20px;
+      padding: 20px 0 10px;
+      border-top: 1px solid #28444f;
+    }
+
+    .footer-note i {
+      color: #65f7c2;
+    }
+
+    /* snackbar / toast for copy */
+    .toast-msg {
+      visibility: hidden;
+      min-width: 200px;
+      background: #1f5a4c;
+      color: #fff;
+      text-align: center;
+      border-radius: 40px;
+      padding: 16px;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 600;
+      box-shadow: 0 8px 0 #0b332b;
+      border: 1px solid #9affd0;
+      z-index: 10;
+    }
+
+    .toast-msg.show {
+      visibility: visible;
+      animation: fadein 0.2s, fadeout 0.2s 1.5s;
+    }
+
+    @keyframes fadein {from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;}}
+    @keyframes fadeout {from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- header -->
+    <div class="brand-header">
+      <div class="brand-name">
+        <i class="fas fa-satellite-dish"></i> Starlink Ltd
+      </div>
+      <div class="tagline">
+        <i class="fas fa-bolt" style="margin-right: 6px;"></i> High-Speed Internet Packages
+      </div>
+    </div>
+
+    <!-- ##### PACKAGES GRID (same six) ##### -->
+    <div class="packages-grid">
+      <!-- 24 Hours / 7GB / Ksh 79 -->
+      <div class="package-card" data-duration="24 Hours" data-data="7GB" data-price="79">
+        <div class="package-info">
+          <span class="duration"><i class="far fa-clock"></i> 24 Hours</span>
+          <span class="data-amount">7GB</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 79</span>
+          <button class="buy-btn"><i class="fas fa-cart-shopping"></i> Buy</button>
+        </div>
+      </div>
+      <!-- 7 Days / 12GB / Ksh 89 -->
+      <div class="package-card" data-duration="7 Days" data-data="12GB" data-price="89">
+        <div class="package-info">
+          <span class="duration"><i class="fas fa-calendar-week"></i> 7 Days</span>
+          <span class="data-amount">12GB</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 89</span>
+          <button class="buy-btn"><i class="fas fa-cart-shopping"></i> Buy</button>
+        </div>
+      </div>
+      <!-- 14 Days / 22GB / Ksh 110 -->
+      <div class="package-card" data-duration="14 Days" data-data="22GB" data-price="110">
+        <div class="package-info">
+          <span class="duration"><i class="fas fa-calendar-alt"></i> 14 Days</span>
+          <span class="data-amount">22GB</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 110</span>
+          <button class="buy-btn"><i class="fas fa-cart-shopping"></i> Buy</button>
+        </div>
+      </div>
+      <!-- 21 Days / 35GB / Ksh 130 -->
+      <div class="package-card" data-duration="21 Days" data-data="35GB" data-price="130">
+        <div class="package-info">
+          <span class="duration"><i class="fas fa-calendar-check"></i> 21 Days</span>
+          <span class="data-amount">35GB</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 130</span>
+          <button class="buy-btn"><i class="fas fa-cart-shopping"></i> Buy</button>
+        </div>
+      </div>
+      <!-- 30 Days / 50GB / Ksh 159 (most popular) -->
+      <div class="package-card" data-duration="30 Days" data-data="50GB" data-price="159" style="border: 2px solid #5effc0;">
+        <div class="package-info">
+          <span class="duration">
+            <i class="fas fa-calendar-alt"></i> 30 Days 
+            <span class="popular-tag"><i class="fas fa-star"></i> most data</span>
+          </span>
+          <span class="data-amount">50GB</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 159</span>
+          <button class="buy-btn"><i class="fas fa-bolt"></i> Buy</button>
+        </div>
+      </div>
+      <!-- 2 Months / Unlimited / Ksh 220 -->
+      <div class="package-card" data-duration="2 Months" data-data="Unlimited" data-price="220">
+        <div class="package-info">
+          <span class="duration"><i class="fas fa-infinity"></i> 2 Months</span>
+          <span class="data-amount">Unlimited</span>
+        </div>
+        <div class="package-purchase">
+          <span class="price"><small>Ksh</small> 220</span>
+          <button class="buy-btn"><i class="fas fa-cart-shopping"></i> Buy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ##### M-PESA WORKING NUMBER DISPLAY + STK SIMULATION ##### -->
+    <div class="mpesa-panel" id="mpesaPanel">
+      <div class="mpesa-title">
+        <i class="fas fa-mobile-alt"></i> M-PESA express
+        <span style="font-size: 14px; background: #20443b; padding: 4px 12px; border-radius: 30px;">pay with phone</span>
+      </div>
+
+      <!-- selected package summary (dynamic) -->
+      <div class="selected-package-badge" id="selectedPackageDisplay" style="margin-bottom: 15px; text-align: center; font-size: 18px;">
+        ⚡ No package selected
+      </div>
+
+      <!-- Phone number input (user can edit) + our official Till/Display number -->
+      <div class="phone-input-area">
+        <div class="label-row">
+          <span><i class="fas fa-phone"></i> Your M-PESA number</span>
+          <span style="color:#6fe0b0;">balance: demo</span>
+        </div>
+        <div class="phone-box">
+          <span>+254</span>
+          <input type="tel" id="mpesaPhoneInput" placeholder="712 345 678" value="798 123 456" maxlength="9" inputmode="numeric">
+        </div>
+
+        <!-- the WORKING M-PESA TILL NUMBER display (static but copyable) -->
+        <div style="margin: 20px 0 12px; display: flex; align-items: center; gap: 8px;">
+          <div style="font-size: 15px; color: #b3d8d0;"><i class="fas fa-arrow-down"></i> Paybill/Till number:</div>
+        </div>
+        <div class="mpesa-number-display">
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <i class="fas fa-building-columns"></i>
+            <span style="font-size: 32px; letter-spacing: 2px; color: #dbffdb;">542721</span>
+          </div>
+          <button class="copy-btn" id="copyTillBtn"><i class="fas fa-copy"></i> copy</button>
+        </div>
+        <div style="color: #8bb5aa; font-size: 14px; margin: 5px 0 10px;">
+          <i class="fas fa-lock"></i> Business no.: <strong>542721</strong> (Starlink Kenya)
+        </div>
+
+        <!-- STK Push simulation button (interactive) -->
+        <button class="stk-push-btn" id="stkPushBtn">
+          <i class="fas fa-bolt"></i> SIMULATE STK PUSH
+          <i class="fas fa-arrow-right"></i>
+        </button>
+        <p style="font-size: 13px; color: #89bbbb; margin-top: 12px;">
+          <i class="fas fa-clock"></i> You'll receive a payment request on <span id="displayPhone">+254 798 123 456</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- extra features row -->
+    <div style="display: flex; justify-content: space-around; background: #101a22; border-radius: 60px; padding: 15px 10px; margin: 15px 0 8px;">
+      <span><i class="fas fa-rocket" style="color: #48ffb0;"></i> instant activation</span>
+      <span><i class="fas fa-shield-alt" style="color: #48ffb0;"></i> secure m-pesa</span>
+      <span><i class="fas fa-headset" style="color: #48ffb0;"></i> 24/7 support</span>
+    </div>
+
+    <div class="footer-note">
+      <i class="fas fa-wifi"></i> Pay via M-PESA Paybill <strong>542721</strong> · Account: your phone<br>
+      <span style="font-size: 13px;">⚡ prices include VAT • Starlink bundles demo</span>
+    </div>
+
+    <!-- toast for copy feedback -->
+    <div id="toast" class="toast-msg">📋 Till number copied!</div>
+  </div>
+
+  <script>
+    (function() {
+      // ----- data / state -----
+      let selectedPackage = null; // object with details
+      const buyButtons = document.querySelectorAll('.buy-btn');
+      const selectedDisplaySpan = document.getElementById('selectedPackageDisplay');
+      const mpesaPhoneInput = document.getElementById('mpesaPhoneInput');
+      const displayPhoneSpan = document.getElementById('displayPhone');
+      const stkBtn = document.getElementById('stkPushBtn');
+      const copyBtn = document.getElementById('copyTillBtn');
+      const toast = document.getElementById('toast');
+
+      // helper to format phone display
+      function updatePhoneDisplay() {
+        let raw = mpesaPhoneInput.value.replace(/\D/g, '');
+        if (raw.length > 9) raw = raw.slice(0,9);
+        let formatted = '';
+        if (raw.length >= 3) formatted = raw.slice(0,3) + ' ' + raw.slice(3);
+        if (raw.length >= 6) formatted = raw.slice(0,3) + ' ' + raw.slice(3,6) + ' ' + raw.slice(6);
+        else if (raw.length > 3) formatted = raw.slice(0,3) + ' ' + raw.slice(3);
+        else formatted = raw;
+        displayPhoneSpan.innerText = '+254 ' + (formatted || '--- --- ---');
+      }
+
+      mpesaPhoneInput.addEventListener('input', updatePhoneDisplay);
+      updatePhoneDisplay(); // initial
+
+      // package selection logic (when Buy clicked)
+      buyButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const card = this.closest('.package-card');
+          if (!card) return;
+
+          // extract details
+          const durationElem = card.querySelector('.duration');
+          let durationText = durationElem ? durationElem.innerText.replace(/[🕛📅★]/g, '').replace(/\s+/g, ' ').trim() : '';
+          const dataText = card.querySelector('.data-amount')?.innerText.trim() || '';
+          const priceElem = card.querySelector('.price');
+          const priceText = priceElem ? priceElem.innerText.trim() : '';
+          const priceValue = card.dataset.price || '0';
+
+          selectedPackage = {
+            duration: durationText,
+            data: dataText,
+            price: priceText,
+            value: priceValue
+          };
+
+          // update selected display
+          selectedDisplaySpan.innerHTML = `⚡ Selected: ${durationText} · ${dataText} · ${priceText}`;
+
+          // mini feedback: highlight panel
+          document.getElementById('mpesaPanel').style.transition = '0.2s';
+          document.getElementById('mpesaPanel').style.borderColor = '#9effb0';
+          setTimeout(() => document.getElementById('mpesaPanel').style.borderColor = '#1e5f5f', 300);
+
+          // optional alert but less intrusive
+          // we could show a small toast but keep it simple
+        });
+      });
+
+      // STK Push simulation – uses selected package & phone
+      stkBtn.addEventListener('click', function() {
+        if (!selectedPackage) {
+          alert('Please tap "Buy" on a package first.');
+          return;
+        }
+
+        let phoneRaw = mpesaPhoneInput.value.replace(/\D/g, '');
+        if (phoneRaw.length < 9) {
+          alert('Enter a valid 9-digit M-PESA number (e.g., 798123456)');
+          return;
+        }
+        if (phoneRaw.length > 9) phoneRaw = phoneRaw.slice(0,9);
+        const fullPhone = '254' + phoneRaw;
+
+        // simulate STK push
+        const packageDesc = `${selectedPackage.duration} - ${selectedPackage.data}`;
+        const amount = selectedPackage.value || selectedPackage.price.replace(/\D/g,'');
+
+        alert(`✨ M-PESA STK Push SIMULATION ✨
+
+Amount: Ksh ${amount}
+To:    ${fullPhone}
+Till:  542721 (Starlink)
+
+📲 A pop-up will appear on your phone.
+Enter PIN to complete payment.
+
+(This is a demo – in production, real STK push would be sent.)`);
+
+        // extra: show in console (not needed)
+      });
+
+      // copy till number to clipboard
+      copyBtn.addEventListener('click', function() {
+        const till = '542721';
+        navigator.clipboard.writeText(till).then(() => {
+          toast.classList.add('show');
+          setTimeout(() => toast.classList.remove('show'), 1700);
+        }).catch(() => {
+          alert('Copy failed, but till is 542721');
+        });
+      });
+
+      // also pre-select a default package for better UX? Let's set first package as "preview"
+      const firstCard = document.querySelector('.package-card');
+      if (firstCard) {
+        // simulate a pre-selection (optional) to avoid empty
+        setTimeout(() => {
+          const firstBuy = firstCard.querySelector('.buy-btn
